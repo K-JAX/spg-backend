@@ -2,4 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home3/superpq8/public_html/wp-content/themes/
-    - /bin/cp -R wp-content/themes/superpowergainz $DEPLOYPATH
+    - /bin/cp -R wp-content/themes/superpowergainz $DEPLOYPATH 
