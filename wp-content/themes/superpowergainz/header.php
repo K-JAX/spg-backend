@@ -30,7 +30,7 @@
 			the_custom_logo();
 			if ( is_front_page() && is_home() ) :
 				?>
-				Some stuff, some thangss<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+				Some stuff, some thangssss<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
 				<?php
 			else :
 				?>
