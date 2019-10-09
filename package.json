@@ -1,0 +1,12 @@
+{
+  "name": "SuperPowerGainzWordpress",
+  "version": "0.0.1",
+  "description": "Data Endpoint for superpowergainz.com",
+  "main": "index.js",
+  "repository": "https://github.com/K-JAX/spg-backend.git",
+  "author": "Kevin Garubba",
+  "license": "MIT",
+  "scripts": {
+    "deploy": "scp -rp \"$PWD/wp-content/themes/superpowergainz\" superpq8@162.241.24.116:public_html/superpowergainz/wp-content/themes/"
+  }
+}
