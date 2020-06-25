@@ -7,6 +7,6 @@
   "author": "Kevin Garubba",
   "license": "MIT",
   "scripts": {
-    "deploy": "scp -rp \"$PWD/wp-content/themes/superpowergainz\" superpq8@162.241.24.116:public_html/superpowergainz/wp-content/themes/"
+    "deploy": "scp -i ~/.ssh/id_rsa_bh -rp \"$PWD/wp-content/themes/superpowergainz\" superpq8@162.241.24.116:public_html/superpowergainz/wp-content/themes/"
   }
 }

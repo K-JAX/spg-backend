@@ -3,7 +3,6 @@ const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const ExtractCssChunks = require("extract-css-chunks-webpack-plugin")
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-
 module.exports = {
     entry:  {
         script: './src/script.js'

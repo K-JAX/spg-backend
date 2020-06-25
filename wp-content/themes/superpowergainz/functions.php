@@ -82,3 +82,32 @@ if ( ! function_exists( 'superpowergainz_setup' ) ) :
 	}
 endif;
 add_action( 'after_setup_theme', 'superpowergainz_setup' );
+
+
+define( 'SPG_XTRA', get_stylesheet_directory() . '/inc/');
+define( 'SPG_BLOCKS', get_stylesheet_directory() . '/blocks/');
+
+require_once( SPG_XTRA . 'custom_post_types.php' );
+require_once( SPG_BLOCKS . 'register_blocks.php' );
+
+
+add_action('init', 'spg_blocks');
+
+// require_once( SPG_BLOCKS . 'register_blocks.php' );
+
+function my_custom_link_query( $query ){
+
+    // custom post type slug to be removed
+    $cpt_to_remove = '';      // Edit this to your needs
+
+    // find the corresponding array key
+    $key = array_search( $cpt_to_remove, $query['post_type'] ); 
+
+    // remove the array item
+    if( $key )
+        unset( $query['post_type'][$key] );
+
+    return $query; 
+}
+
+add_filter( 'wp_link_query_args', 'my_custom_link_query' );
