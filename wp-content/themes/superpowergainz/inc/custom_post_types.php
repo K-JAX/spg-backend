@@ -96,3 +96,210 @@ function create_exercise_taxonomies() {
     register_taxonomy( 'bodypart', array( 'exercise' ), $args );
 }
 
+
+
+
+
+function register_custom_post_type(){
+
+    // Call in our custom menu icons for our menu labels
+    require_once( 'custom-icons.php' );
+
+
+    register_post_type('workout',
+    array(
+        'labels'    =>  array(
+            'name'          => __('Workouts'),
+            'singular_name' => __('Workout'),
+        ),
+        'menu_icon' => $barbellIcon,
+        'public'        =>  true,
+        'has_archive'   =>  true,
+        'taxonomies'          => array('bodypart' ),
+    ));
+
+    register_post_type('food',
+    array(
+        'labels'    =>  array(
+            'name'          => __('Food'),
+            'singular_name' => __('Food'),
+        ),
+        'menu_icon' => 'data:image/svg+xml;base64,' .$foodIcon,
+        'public'        =>  true,
+        'has_archive'   =>  true,
+        'taxonomies'          => array('foodgroup' ),
+    ));
+};
+
+add_action( 'init', 'register_custom_post_type' );
+
+
+
+/**
+ * Add custom taxonomies
+ *
+ * Additional custom taxonomies can be defined here
+ * http://codex.wordpress.org/Function_Reference/register_taxonomy
+ */
+function add_custom_taxonomies() {
+    // Add new "Locations" taxonomy to Posts 
+    register_taxonomy('bodypart', 'workout', array(
+      // Hierarchical taxonomy (like categories)
+      'hierarchical' => true,
+      // This array of options controls the labels displayed in the WordPress Admin UI
+      'labels' => array(
+        'name' => _x( 'Body Parts', 'taxonomy general name' ),
+        'singular_name' => _x( 'Body Part', 'taxonomy singular name' ),
+        'search_items' =>  __( 'Search Locations' ),
+        'all_items' => __( 'All Locations' ),
+        'parent_item' => __( 'Parent Body Part' ),
+        'parent_item_colon' => __( 'Parent Body Part:' ),
+        'edit_item' => __( 'Edit Body Part' ),
+        'update_item' => __( 'Update Body Part' ),
+        'add_new_item' => __( 'Add New Body Part' ),
+        'new_item_name' => __( 'New Body Part Name' ),
+        'menu_name' => __( 'Body Parts' ),
+      ),
+      // Control the slugs used for this taxonomy
+      'rewrite' => array(
+        'slug' => 'body-parts', // This controls the base slug that will display before each term
+        'with_front' => false, // Don't display the category base before "/locations/"
+        'hierarchical' => true // This will allow URL's like "/locations/boston/cambridge/"
+      ),
+    ));
+    register_taxonomy('trainingstyle', 'workout', array(
+      // Hierarchical taxonomy (like categories)
+      'hierarchical' => true,
+      // This array of options controls the labels displayed in the WordPress Admin UI
+      'labels' => array(
+        'name' => _x( 'Training Styles', 'taxonomy general name' ),
+        'singular_name' => _x( 'Training Style', 'taxonomy singular name' ),
+        'search_items' =>  __( 'Search Locations' ),
+        'all_items' => __( 'All Locations' ),
+        'parent_item' => __( 'Parent Training Style' ),
+        'parent_item_colon' => __( 'Parent Training Style:' ),
+        'edit_item' => __( 'Edit Training Style' ),
+        'update_item' => __( 'Update Training Style' ),
+        'add_new_item' => __( 'Add New Training Style' ),
+        'new_item_name' => __( 'New Training Style Name' ),
+        'menu_name' => __( 'Training Styles' ),
+      ),
+      // Control the slugs used for this taxonomy
+      'rewrite' => array(
+        'slug' => 'training-style', // This controls the base slug that will display before each term
+        'with_front' => false, // Don't display the category base before "/locations/"
+        'hierarchical' => true // This will allow URL's like "/locations/boston/cambridge/"
+      ),
+    ));
+
+
+
+    $exerciseLabels = array(
+      'name' => _x( 'Workout Tags', 'taxonomy general name' ),
+      'singular_name' => _x( 'Workout Tag', 'taxonomy singular name' ),
+      'search_items' =>  __( 'Search Workout Tags' ),
+      'popular_items' => __( 'Popular Workout Tags' ),
+      'all_items' => __( 'All Workout Tags' ),
+      'parent_item' => null,
+      'parent_item_colon' => null,
+      'edit_item' => __( 'Edit Workout Tag' ), 
+      'update_item' => __( 'Update Workout Tag' ),
+      'add_new_item' => __( 'Add New Workout Tag' ),
+      'new_item_name' => __( 'New Workout Tag Name' ),
+      'separate_items_with_commas' => __( 'Separate workout tags with commas' ),
+      'add_or_remove_items' => __( 'Add or remove workout tags' ),
+      'choose_from_most_used' => __( 'Choose from the most used workout tags' ),
+      'menu_name' => __( 'Workout Tags' ),
+    ); 
+    register_taxonomy('workout-tag','workout',array(
+      'hierarchical' => false,
+      'labels' => $exerciseLabels,
+      'show_ui' => true,
+      'update_count_callback' => '_update_post_term_count',
+      'query_var' => true,
+      'rewrite' => array( 'slug' => 'tag' ),
+    ));
+
+
+    register_taxonomy('foodgroup', 'food', array(
+        // Hierarchical taxonomy (like categories)
+        'hierarchical' => true,
+        // This array of options controls the labels displayed in the WordPress Admin UI
+        'labels' => array(
+          'name' => _x( 'Food Groups', 'taxonomy general name' ),
+          'singular_name' => _x( 'Food Group', 'taxonomy singular name' ),
+          'search_items' =>  __( 'Search Locations' ),
+          'all_items' => __( 'All Locations' ),
+          'parent_item' => __( 'Parent Food Group' ),
+          'parent_item_colon' => __( 'Parent Food Group:' ),
+          'edit_item' => __( 'Edit Food Group' ),
+          'update_item' => __( 'Update Food Group' ),
+          'add_new_item' => __( 'Add New Food Group' ),
+          'new_item_name' => __( 'New Food Group Name' ),
+          'menu_name' => __( 'Food Groups' ),
+        ),
+        // Control the slugs used for this taxonomy
+        'rewrite' => array(
+          'slug' => 'food-groups', // This controls the base slug that will display before each term
+          'with_front' => false, // Don't display the category base before "/locations/"
+          'hierarchical' => true // This will allow URL's like "/locations/boston/cambridge/"
+        ),
+      ));
+    register_taxonomy('diet', 'food', array(
+        // Hierarchical taxonomy (like categories)
+        'hierarchical' => true,
+        // This array of options controls the labels displayed in the WordPress Admin UI
+        'labels' => array(
+          'name' => _x( 'Diets', 'taxonomy general name' ),
+          'singular_name' => _x( 'Diet', 'taxonomy singular name' ),
+          'search_items' =>  __( 'Search Locations' ),
+          'all_items' => __( 'All Locations' ),
+          'parent_item' => __( 'Parent Diet' ),
+          'parent_item_colon' => __( 'Parent Diet:' ),
+          'edit_item' => __( 'Edit Diet' ),
+          'update_item' => __( 'Update Diet' ),
+          'add_new_item' => __( 'Add New Diet' ),
+          'new_item_name' => __( 'New Diet Name' ),
+          'menu_name' => __( 'Diets' ),
+        ),
+        // Control the slugs used for this taxonomy
+        'rewrite' => array(
+          'slug' => 'diets', // This controls the base slug that will display before each term
+          'with_front' => false, // Don't display the category base before "/locations/"
+          'hierarchical' => true // This will allow URL's like "/locations/boston/cambridge/"
+        ),
+      ));
+
+
+
+      $foodLabels = array(
+        'name' => _x( 'Food Tags', 'taxonomy general name' ),
+        'singular_name' => _x( 'Tag', 'taxonomy singular name' ),
+        'search_items' =>  __( 'Search Food Tags' ),
+        'popular_items' => __( 'Popular Food Tags' ),
+        'all_items' => __( 'All Food Tags' ),
+        'parent_item' => null,
+        'parent_item_colon' => null,
+        'edit_item' => __( 'Edit Tag' ), 
+        'update_item' => __( 'Update Tag' ),
+        'add_new_item' => __( 'Add New Tag' ),
+        'new_item_name' => __( 'New Tag Name' ),
+        'separate_items_with_commas' => __( 'Separate tags with commas' ),
+        'add_or_remove_items' => __( 'Add or remove tags' ),
+        'choose_from_most_used' => __( 'Choose from the most used tags' ),
+        'menu_name' => __( 'Food Tags' ),
+      ); 
+      register_taxonomy('food-tag','food',array(
+        'hierarchical' => false,
+        'labels' => $foodLabels,
+        'show_ui' => true,
+        'update_count_callback' => '_update_post_term_count',
+        'query_var' => true,
+        'rewrite' => array( 'slug' => 'tag' ),
+      ));
+
+
+  }
+  add_action( 'init', 'add_custom_taxonomies', 0 );
+
+  
